@@ -5,7 +5,13 @@ namespace TarefaNinja.DAL.Models;
 
 public record TaskModel(string Name, string Description, ProjectTaskStatus Status) : BaseModel
 {
-    public Guid? AssigneeId{ get; set; }
+    public TaskModel(Guid id, string name, ProjectTaskStatus status, UserModel userModel) : this(name, string.Empty, status)
+    {
+        Id = id;
+        Assignee = userModel;
+    }
+
+    public Guid? AssigneeId { get; set; }
 
     public virtual UserModel Assignee { get; set; } = default!;
 

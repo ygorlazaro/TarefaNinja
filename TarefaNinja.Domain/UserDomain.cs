@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Identity;
-
 using TarefaNinja.DAL.Models;
 using TarefaNinja.Domain.Requests;
 using TarefaNinja.Domain.Responses;
@@ -29,7 +27,7 @@ public class UserDomain : IUserDomain
 
     public async Task<NewUserResponse> CreateNewUserAsync(NewUserRequest userRequest)
     {
-        var exists = await UserRepository.ExistsAsync(userRequest.Username, userRequest.Email);
+        var exists = await UserRepository.ExistsAsync(userRequest.Login, userRequest.Email);
 
         if (exists)
         {
@@ -41,7 +39,7 @@ public class UserDomain : IUserDomain
 
         var hashedPassword = PasswordHasher.Hash(userRequest.Password);
 
-        var user = new UserModel(userRequest.Name, userRequest.Username, userRequest.Email, hashedPassword);
+        var user = new UserModel(userRequest.Name, userRequest.Login, userRequest.Email, hashedPassword);
 
         UserRepository.Insert(user);
 
@@ -49,13 +47,13 @@ public class UserDomain : IUserDomain
 
         await UserRepository.SaveChangesAsync();
 
-        return new NewUserResponse(user.Id, user.Name, user.Username, user.Email, company.Id, company.Name, role);
+        return new NewUserResponse(user.Id, user.Name, user.Login, user.Email, company.Id, company.Name, role);
     }
 
 
-    public async Task<UserLoginResponse> LoginAsync(string username, string password)
+    public async Task<UserLoginResponse> LoginAsync(string login, string password)
     {
-        var user = await UserRepository.DoLogin(username);
+        var user = await UserRepository.DoLogin(login);
 
         if (user is null)
         {
@@ -69,7 +67,7 @@ public class UserDomain : IUserDomain
             throw new InvalidPasswordException("A senha informada não confere");
         }
 
-        return new UserLoginResponse(user.Id, user.Name, user.Username, user.Email);
+        return new UserLoginResponse(user.Id, user.Name, user.Login, user.Email);
     }
 
     private async Task<(CompanyModel company, bool Created)> GetOrCreateCompanyAsync(Guid? companyId, string? companyName)

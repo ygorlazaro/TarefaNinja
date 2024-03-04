@@ -1,7 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 
-using System;
-
 using TarefaNinja.DAL;
 using TarefaNinja.DAL.Models;
 using TarefaNinja.Repositories.Abstracts;

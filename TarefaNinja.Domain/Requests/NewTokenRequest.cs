@@ -1,3 +1,3 @@
 namespace TarefaNinja.Domain.Requests;
 
-public record NewTokenRequest(string Username, string Password);
+public record NewTokenRequest(string Login, string Password);

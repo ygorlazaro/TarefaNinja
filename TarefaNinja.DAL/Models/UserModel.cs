@@ -2,12 +2,22 @@
 
 namespace TarefaNinja.DAL.Models;
 
-public record UserModel(string Name, string Username, string Email, string Password) : BaseModel
+public record UserModel(Guid Id, string Name, string Email) : BaseModel
 {
-    public UserModel(Guid id, string name, string username, string email, string password) : this(name, username, email, password)
+    public UserModel(string name, string login, string email, string password) : this(Guid.Empty, name, email)
+    {
+        Login = login;
+        Password = password;
+    }
+
+    public UserModel(Guid id, string name, string login, string email, string password) : this(name, login, email, password)
     {
         Id = id;
     }
+
+    public string Login { get; set; } = default!;
+
+    public string Password { get; set; } = default!;
 
     public virtual ICollection<UserCompanyModel> UserCompanies { get; set; } = default!;
 

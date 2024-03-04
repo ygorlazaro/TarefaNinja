@@ -5,7 +5,7 @@ namespace TarefaNinja.Repositories;
 
 public interface IUserRepository : IBaseRepository<UserModel>
 {
-    Task<UserModel?> DoLogin(string username);
+    Task<UserModel?> DoLogin(string login);
 
-    Task<bool> ExistsAsync(string username, string email);
+    Task<bool> ExistsAsync(string login, string email);
 }

@@ -12,11 +12,11 @@ public class UserRepository : BaseRepository<UserModel>, IUserRepository
     {
     }
 
-    public async Task<UserModel?> DoLogin(string username)
+    public async Task<UserModel?> DoLogin(string login)
     {
         var query = from user in Context.Users
-                    where user.Username == username
-                    select new UserModel(user.Id, user.Name, user.Username, user.Email, user.Password);
+                    where user.Login == login
+                    select new UserModel(user.Id, user.Name, user.Login, user.Email, user.Password);
 
         var userFound = await query.FirstOrDefaultAsync();
 
@@ -28,11 +28,11 @@ public class UserRepository : BaseRepository<UserModel>, IUserRepository
         return userFound;
     }
 
-    public async Task<bool> ExistsAsync(string username, string email)
+    public async Task<bool> ExistsAsync(string login, string email)
     {
-        var cleanUsername = username.Trim().ToLower();
+        var cleanLogin = login.Trim().ToLower();
         var cleanEmail = email.Trim().ToLower();
 
-        return await Context.Users.AnyAsync(u => u.Username.Trim().ToLower() == cleanUsername || u.Email.Trim().ToLower() == cleanEmail);
+        return await Context.Users.AnyAsync(u => u.Login.Trim().ToLower() == cleanLogin || u.Email.Trim().ToLower() == cleanEmail);
     }
 }

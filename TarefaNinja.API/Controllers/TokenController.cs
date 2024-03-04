@@ -28,7 +28,7 @@ public class TokenController : BaseController
     [AllowAnonymous]
     public async Task<ActionResult<NewTokenResponse>> PostNewTokenAsync([FromBody] NewTokenRequest request)
     {
-        var user = await UserDomain.LoginAsync(request.Username, request.Password);
+        var user = await UserDomain.LoginAsync(request.Login, request.Password);
 
         if (user is null)
         {
@@ -43,7 +43,7 @@ public class TokenController : BaseController
         ArgumentNullException.ThrowIfNull(jwtIssuer);
         ArgumentNullException.ThrowIfNull(jwtAudience);
 
-        var token = TokenService.GenerateJwtToken(user.Username, user.Name, user.userId, user.Email, jwtKey, jwtIssuer, jwtAudience);
+        var token = TokenService.GenerateJwtToken(user.Login, user.Name, user.userId, user.Email, jwtKey, jwtIssuer, jwtAudience);
 
         return Ok(new NewTokenResponse(token));
     }
