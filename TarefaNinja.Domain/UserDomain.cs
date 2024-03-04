@@ -42,6 +42,24 @@ public class UserDomain : IUserDomain
         return new NewUserResponse(insertedUser.Id, insertedUser.Name, insertedUser.Username, insertedUser.Email, company.Id, company.Name, role);
     }
 
+
+    public async Task<UserLoginResponse> LoginAsync(string username, string password)
+    {
+        var user = await UserRepository.DoLogin(username);
+
+        if (user is null)
+        {
+            throw new UserNotFoundException("O usuário informado não foi encontrado");
+        }
+
+        if (user.Password != password)
+        {
+            throw new InvalidPasswordException("A senha informada não confere");
+        }
+
+        return new UserLoginResponse(user.Id, user.Name, user.Username, user.Email);
+    }
+
     private async Task<(CompanyModel company, bool Created)> GetOrCreateCompanyAsync(Guid? companyId, string? companyName)
     {
         if (companyId is null && string.IsNullOrWhiteSpace(companyName))
@@ -70,5 +88,6 @@ public class UserDomain : IUserDomain
 
         return (await CompanyRepository.InsertAsync(newCompany), true);
     }
+
 }
 

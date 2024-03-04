@@ -12,16 +12,20 @@ public class UserRepository : BaseRepository<UserModel>, IUserRepository
     {
     }
 
-    public async Task<UserModel?> DoLogin(string username, string password)
+    public async Task<UserModel?> DoLogin(string username)
     {
-        var user = await Context.Users.FirstOrDefaultAsync(user => user.Username == username);
+        var query = from user in Context.Users
+                    where user.Username == username
+                    select new UserModel(user.Id, user.Name, user.Username, user.Email, user.Password);
 
-        if (user is null)
+        var userFound = await query.FirstOrDefaultAsync();
+
+        if (userFound is null)
         {
             return null;
         }
 
-        return user;
+        return userFound;
     }
 
     public async Task<bool> ExistsAsync(string username, string email)
