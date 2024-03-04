@@ -14,11 +14,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TarefaNinja.Utils", "TarefaNinja.Utils\TarefaNinja.Utils.csproj", "{FF76F7AF-F61F-4F5B-A18A-3DE2EEE7FDA8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TarefaNinja.Repositories", "TarefaNinja.Repositories\TarefaNinja.Repositories.csproj", "{464C64F1-3D00-4FB8-8DCB-602843238615}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TarefaNinja.Repositories", "TarefaNinja.Repositories\TarefaNinja.Repositories.csproj", "{464C64F1-3D00-4FB8-8DCB-602843238615}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TarefaNinja.Domain", "TarefaNinja.Domain\TarefaNinja.Domain.csproj", "{1EBBEDE1-0C98-4829-95DE-1A8529018BC7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TarefaNinja.Domain", "TarefaNinja.Domain\TarefaNinja.Domain.csproj", "{1EBBEDE1-0C98-4829-95DE-1A8529018BC7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TarefaNinja.Services", "TarefaNinja.Services\TarefaNinja.Services.csproj", "{6490F796-8ABE-4E5E-8B1E-F13A0037E40F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TarefaNinja.Services", "TarefaNinja.Services\TarefaNinja.Services.csproj", "{6490F796-8ABE-4E5E-8B1E-F13A0037E40F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TarefaNinja.Blazor", "TarefaNinja.Blazor\TarefaNinja.Blazor.csproj", "{301D9162-7FD1-4500-AF9A-1D42110F8AB7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,6 +52,10 @@ Global
 		{6490F796-8ABE-4E5E-8B1E-F13A0037E40F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6490F796-8ABE-4E5E-8B1E-F13A0037E40F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6490F796-8ABE-4E5E-8B1E-F13A0037E40F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{301D9162-7FD1-4500-AF9A-1D42110F8AB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{301D9162-7FD1-4500-AF9A-1D42110F8AB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{301D9162-7FD1-4500-AF9A-1D42110F8AB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{301D9162-7FD1-4500-AF9A-1D42110F8AB7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
