@@ -70,7 +70,14 @@ services.AddAuthentication(option =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]))
     };
 });
-services.AddControllers();
+services.AddControllers()
+      .AddJsonOptions(config =>
+      {
+          config.JsonSerializerOptions.AllowTrailingCommas = false;
+          config.JsonSerializerOptions.MaxDepth = 0;
+          config.JsonSerializerOptions.IgnoreReadOnlyFields = true;
+          config.JsonSerializerOptions.IgnoreReadOnlyProperties = true;
+      });
 
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 

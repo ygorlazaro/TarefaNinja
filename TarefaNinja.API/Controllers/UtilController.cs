@@ -1,0 +1,13 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using TarefaNinja.API.Abstracts;
+
+namespace TarefaNinja.API.Controllers;
+
+public class UtilController : BaseController
+{
+    [HttpGet("unixtime")]
+    public IActionResult GetUnixTime()
+    {
+        return Ok(DateTimeOffset.Now.ToUnixTimeSeconds());
+    }
+}

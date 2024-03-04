@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 using TarefaNinja.API.Abstracts;
 using TarefaNinja.Domain;
@@ -24,6 +25,7 @@ public class TokenController : BaseController
     }
 
     [HttpPost]
+    [AllowAnonymous]
     public async Task<ActionResult<NewTokenResponse>> PostNewTokenAsync([FromBody] NewTokenRequest request)
     {
         var user = await UserDomain.LoginAsync(request.Username, request.Password);
