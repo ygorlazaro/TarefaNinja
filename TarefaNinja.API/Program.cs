@@ -1,3 +1,4 @@
+using Asp.Versioning;
 using Joonasw.AspNetCore.SecurityHeaders;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -97,6 +98,20 @@ services.AddDbContext<DefaultContext>(options =>
         o.MigrationsAssembly("TarefaNinja.API");
     }).UseSnakeCaseNamingConvention();
 });
+
+services.AddApiVersioning(options =>
+{
+    options.DefaultApiVersion = new ApiVersion(1);
+    options.ReportApiVersions = true;
+    options.UnsupportedApiVersionStatusCode = StatusCodes.Status505HttpVersionNotsupported;
+    options.ApiVersionReader = ApiVersionReader.Combine(
+        new HeaderApiVersionReader("X-Api-Version"));
+}).AddApiExplorer(options =>
+{
+    options.GroupNameFormat = "'v'V";
+    options.SubstituteApiVersionInUrl = true;
+});
+
 
 services.AddTransient<IUserDomain, UserDomain>();
 services.AddTransient<IUserRepository, UserRepository>();
