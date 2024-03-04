@@ -5,5 +5,5 @@ namespace TarefaNinja.Repositories;
 
 public interface IProjectRepository: IBaseRepository<ProjectModel>
 {
-    
+    Task<ICollection<ProjectModel>> GetProjectsByCompanyAsync(Guid companyId);
 }

@@ -5,11 +5,16 @@ namespace TarefaNinja.DAL.Models;
 
 public record ProjectModel(string Name, ProjectStatus Status) : BaseModel
 {
-    public Guid OwnerId{ get; set; }
+    public ProjectModel(Guid id, string name, ProjectStatus status) : this(name, status)
+    {
+        Id = id;
+    }
+
+    public Guid OwnerId { get; set; }
 
     public virtual UserModel Owner { get; set; } = default!;
 
-    public Guid CompanyId{ get; set; }
+    public Guid CompanyId { get; set; }
 
     public virtual CompanyModel Company { get; set; } = default!;
 

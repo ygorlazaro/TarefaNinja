@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+
 using TarefaNinja.API.Abstracts;
 
 namespace TarefaNinja.API.Controllers;
