@@ -2,6 +2,7 @@
   <ItemGroup>
     <ProjectReference Include="..\TarefaNinja.DAL\TarefaNinja.DAL.csproj" />
     <ProjectReference Include="..\TarefaNinja.Repositories\TarefaNinja.Repositories.csproj" />
+    <ProjectReference Include="..\TarefaNinja.Services\TarefaNinja.Services.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="FluentValidation" Version="11.9.0" />

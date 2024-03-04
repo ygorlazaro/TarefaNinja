@@ -34,7 +34,9 @@ public class UserCompanyRepository: BaseRepository<UserCompanyModel>, IUserCompa
 
         var userCompany = new UserCompanyModel(userId, companyId, role);
 
-        await InsertAsync(userCompany);
+        Insert(userCompany);
+
+        await SaveChangesAsync();
 
         return true;
     }

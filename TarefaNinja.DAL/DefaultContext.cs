@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-
+using TarefaNinja.DAL.Abstracts;
 using TarefaNinja.DAL.Models;
 
 namespace TarefaNinja.DAL;
@@ -24,6 +24,8 @@ public class DefaultContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        AddSoftDeleteSupport(modelBuilder);
+
         modelBuilder.Entity<TaskModel>().HasOne(t => t.Assignee)
             .WithMany(u => u.Tasks)
             .HasForeignKey(t => t.AssigneeId)
@@ -34,5 +36,16 @@ public class DefaultContext : DbContext
             .UsingEntity(join => join.ToTable("TaskFollowers"));
 
         base.OnModelCreating(modelBuilder);
+    }
+
+    private static void AddSoftDeleteSupport(ModelBuilder modelBuilder)
+    {
+        var mutableEntityTypes = modelBuilder.Model.GetEntityTypes()
+            .Where(entityType => typeof(ISoftDelete).IsAssignableFrom(entityType.ClrType));
+
+        foreach (var entityType in mutableEntityTypes)
+        {
+            entityType.AddSoftDeleteQueryFilter();
+        }
     }
 }

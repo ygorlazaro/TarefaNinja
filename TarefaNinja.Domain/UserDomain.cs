@@ -1,7 +1,10 @@
+using Microsoft.AspNetCore.Identity;
+
 using TarefaNinja.DAL.Models;
 using TarefaNinja.Domain.Requests;
 using TarefaNinja.Domain.Responses;
 using TarefaNinja.Repositories;
+using TarefaNinja.Services;
 using TarefaNinja.Utils.Enums;
 using TarefaNinja.Utils.Exceptions;
 
@@ -14,11 +17,14 @@ public class UserDomain : IUserDomain
 
     private IUserCompanyRepository UserCompanyRepository { get; }
 
-    public UserDomain(IUserRepository userRepository, ICompanyRepository companyRepository, IUserCompanyRepository userCompanyRepository)
+    private IPasswordHasher PasswordHasher { get; }
+
+    public UserDomain(IUserRepository userRepository, ICompanyRepository companyRepository, IUserCompanyRepository userCompanyRepository, IPasswordHasher passwordHasher)
     {
         UserRepository = userRepository;
         CompanyRepository = companyRepository;
         UserCompanyRepository = userCompanyRepository;
+        PasswordHasher = passwordHasher;
     }
 
     public async Task<NewUserResponse> CreateNewUserAsync(NewUserRequest userRequest)
@@ -33,13 +39,17 @@ public class UserDomain : IUserDomain
         var (company, isNewCompany) = await GetOrCreateCompanyAsync(userRequest.CompanyId, userRequest.CompanyName);
         var role = isNewCompany ? UserCompanyRole.Admin : userRequest.Role;
 
-        var user = new UserModel(userRequest.Name, userRequest.Username, userRequest.Email, userRequest.Password);
+        var hashedPassword = PasswordHasher.Hash(userRequest.Password);
 
-        var insertedUser = await UserRepository.InsertAsync(user);
+        var user = new UserModel(userRequest.Name, userRequest.Username, userRequest.Email, hashedPassword);
 
-        await UserCompanyRepository.AddUserToCompanyAsync(insertedUser.Id, company.Id, role);
+        UserRepository.Insert(user);
 
-        return new NewUserResponse(insertedUser.Id, insertedUser.Name, insertedUser.Username, insertedUser.Email, company.Id, company.Name, role);
+        await UserCompanyRepository.AddUserToCompanyAsync(user.Id, company.Id, role);
+
+        await UserRepository.SaveChangesAsync();
+
+        return new NewUserResponse(user.Id, user.Name, user.Username, user.Email, company.Id, company.Name, role);
     }
 
 
@@ -52,7 +62,9 @@ public class UserDomain : IUserDomain
             throw new UserNotFoundException("O usuário informado não foi encontrado");
         }
 
-        if (user.Password != password)
+        var (verifiedPassword, _) = PasswordHasher.Check(user.Password, password);
+
+        if (verifiedPassword)
         {
             throw new InvalidPasswordException("A senha informada não confere");
         }
@@ -86,7 +98,11 @@ public class UserDomain : IUserDomain
 
         var newCompany = new CompanyModel(companyName);
 
-        return (await CompanyRepository.InsertAsync(newCompany), true);
+        CompanyRepository.Insert(newCompany);
+
+        await CompanyRepository.SaveChangesAsync();
+
+        return (newCompany, true);
     }
 
 }

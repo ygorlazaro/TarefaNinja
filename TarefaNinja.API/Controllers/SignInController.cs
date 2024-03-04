@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 using TarefaNinja.API.Abstracts;
 using TarefaNinja.Domain;
@@ -17,6 +18,7 @@ public class SignInController : BaseController
     }
 
     [HttpPost]
+    [AllowAnonymous]
     public async Task<ActionResult<NewUserResponse>> NewUserAsync([FromBody] NewUserRequest userRequest)
     {
         var user = await UserDomain.CreateNewUserAsync(userRequest);
