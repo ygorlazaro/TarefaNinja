@@ -93,6 +93,7 @@ services.AddTransient<IUserDomain, UserDomain>();
 services.AddTransient<IUserRepository, UserRepository>();
 services.AddTransient<ICompanyRepository, CompanyRepository>();
 services.AddTransient<IUserCompanyRepository, UserCompanyRepository>();
+services.AddTransient<IPasswordHasher, PasswordHasher>();
 services.AddSingleton<ITokenService, TokenService>();
 
 var app = builder.Build();

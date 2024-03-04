@@ -13,5 +13,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TarefaNinja.Utils\TarefaNinja.Utils.csproj" />
+    <ProjectReference Include="..\TarefaNinja.Services\TarefaNinja.Services.csproj" />
   </ItemGroup>
 </Project>
