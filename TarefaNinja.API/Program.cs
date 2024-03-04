@@ -1,12 +1,13 @@
 using Joonasw.AspNetCore.SecurityHeaders;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 using System.Text;
-
+using System.Threading.RateLimiting;
 using TarefaNinja.DAL;
 using TarefaNinja.Domain;
 using TarefaNinja.Repositories;
@@ -94,6 +95,37 @@ services.AddTransient<IUserRepository, UserRepository>();
 services.AddTransient<ICompanyRepository, CompanyRepository>();
 services.AddTransient<IUserCompanyRepository, UserCompanyRepository>();
 services.AddSingleton<ITokenService, TokenService>();
+
+services.AddRateLimiter(options =>
+        {
+            options.RejectionStatusCode = 509;
+
+            options.OnRejected = (OnRejectedContext context, CancellationToken cancellationToken) =>
+            {
+                Console.WriteLine("Logged a rejected request");
+                Console.WriteLine($"IP: {context.HttpContext.Request.Headers["X-Real-IP"]}");
+
+                return new ValueTask();
+            };
+
+            options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(httpContext =>
+                RateLimitPartition.GetFixedWindowLimiter(
+                    partitionKey: httpContext.User.Identity?.Name ?? httpContext.Request.Headers.Host.ToString(),
+                    factory: partition => new FixedWindowRateLimiterOptions
+                    {
+                        AutoReplenishment = true,
+                        PermitLimit = 30,
+                        QueueLimit = 0,
+                        Window = TimeSpan.FromMinutes(1)
+                    }));
+
+            options.AddFixedWindowLimiter("token", options =>
+            {
+                options.AutoReplenishment = true;
+                options.PermitLimit = 3;
+                options.Window = TimeSpan.FromMinutes(1);
+            });
+        });
 
 var app = builder.Build();
 
