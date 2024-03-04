@@ -114,6 +114,7 @@ services.AddApiVersioning(options =>
 
 
 services.AddTransient<IUserDomain, UserDomain>();
+services.AddTransient<ICompanyDomain, CompanyDomain>();
 services.AddTransient<IUserRepository, UserRepository>();
 services.AddTransient<ICompanyRepository, CompanyRepository>();
 services.AddTransient<IUserCompanyRepository, UserCompanyRepository>();

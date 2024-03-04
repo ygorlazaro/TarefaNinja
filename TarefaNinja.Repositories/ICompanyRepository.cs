@@ -7,4 +7,6 @@ namespace TarefaNinja.Repositories;
 public interface ICompanyRepository : IBaseRepository<CompanyModel>
 {
     Task<bool> AddUserToCompanyAsync(Guid userId, Guid companyId, UserCompanyRole role);
+
+    Task<ICollection<CompanyModel>> GetByUserAsync(Guid userId);
 }

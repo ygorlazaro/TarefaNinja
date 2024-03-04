@@ -26,4 +26,14 @@ public class CompanyRepository : BaseRepository<CompanyModel>, ICompanyRepositor
 
         return await Context.SaveChangesAsync() > 0;
     }
+
+    public async Task<ICollection<CompanyModel>> GetByUserAsync(Guid userId)
+    {
+        var query = from company in Context.Companies
+                    join userCompany in Context.UsersCompanies on company.Id equals userCompany.CompanyId
+                    where userCompany.UserId == userId
+                    select new CompanyModel(company.Id, company.Name);
+
+        return await query.ToListAsync();
+    }
 }

@@ -1,0 +1,28 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using TarefaNinja.API.Abstracts;
+using TarefaNinja.Domain;
+using TarefaNinja.Domain.Responses;
+
+namespace TarefaNinja.API.Controllers;
+
+public class CompanyController : BaseController
+{
+    private ICompanyDomain CompanyDomain { get; }
+
+    public CompanyController(ICompanyDomain companyDomain)
+    {
+        CompanyDomain = companyDomain;
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<ICollection<CompanyUserResponse>>> GetCompaniesAsync()
+    {
+        var companies = await CompanyDomain.GetCompaniesAsync(GetUserId());
+
+        return Ok(companies);
+    }
+}
