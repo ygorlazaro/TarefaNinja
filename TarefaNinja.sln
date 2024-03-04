@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TarefaNinja.API", "TarefaNinja.API\TarefaNinja.API.csproj", "{444E4197-601D-451D-813F-00A12606EA13}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TarefaNinja.DAL", "TarefaNinja.DAL\TarefaNinja.DAL.csproj", "{7B30DD17-4093-480F-A138-6EE22FF6053A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{47E4C263-A2CD-4F1E-81B4-B16288A8562B}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TarefaNinja.Utils", "TarefaNinja.Utils\TarefaNinja.Utils.csproj", "{FF76F7AF-F61F-4F5B-A18A-3DE2EEE7FDA8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TarefaNinja.Repositories", "TarefaNinja.Repositories\TarefaNinja.Repositories.csproj", "{464C64F1-3D00-4FB8-8DCB-602843238615}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TarefaNinja.Domain", "TarefaNinja.Domain\TarefaNinja.Domain.csproj", "{1EBBEDE1-0C98-4829-95DE-1A8529018BC7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{444E4197-601D-451D-813F-00A12606EA13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{444E4197-601D-451D-813F-00A12606EA13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{444E4197-601D-451D-813F-00A12606EA13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{444E4197-601D-451D-813F-00A12606EA13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B30DD17-4093-480F-A138-6EE22FF6053A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B30DD17-4093-480F-A138-6EE22FF6053A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B30DD17-4093-480F-A138-6EE22FF6053A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B30DD17-4093-480F-A138-6EE22FF6053A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF76F7AF-F61F-4F5B-A18A-3DE2EEE7FDA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF76F7AF-F61F-4F5B-A18A-3DE2EEE7FDA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF76F7AF-F61F-4F5B-A18A-3DE2EEE7FDA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF76F7AF-F61F-4F5B-A18A-3DE2EEE7FDA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{464C64F1-3D00-4FB8-8DCB-602843238615}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{464C64F1-3D00-4FB8-8DCB-602843238615}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{464C64F1-3D00-4FB8-8DCB-602843238615}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{464C64F1-3D00-4FB8-8DCB-602843238615}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EBBEDE1-0C98-4829-95DE-1A8529018BC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EBBEDE1-0C98-4829-95DE-1A8529018BC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EBBEDE1-0C98-4829-95DE-1A8529018BC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EBBEDE1-0C98-4829-95DE-1A8529018BC7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D86FAF75-0EDB-4285-8EE6-0693BDA656C5}
+	EndGlobalSection
+EndGlobal
