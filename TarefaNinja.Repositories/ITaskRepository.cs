@@ -6,4 +6,5 @@ namespace TarefaNinja.Repositories;
 public interface ITaskRepository : IBaseRepository<TaskModel>
 {
     Task<ICollection<TaskModel>> GetByProjectAsync(Guid projectId);
+    Task<ICollection<TaskModel>> GetByUserAsync(Guid userId);
 }

@@ -21,7 +21,7 @@ public class CompanyController : BaseController
     [HttpGet]
     public async Task<ActionResult<ICollection<CompanyUserResponse>>> GetCompaniesAsync()
     {
-        var companies = await CompanyDomain.GetCompaniesAsync(GetUserId());
+        var companies = await CompanyDomain.GetByUserAsync(GetUserId());
 
         return Ok(companies);
     }

@@ -13,6 +13,16 @@ public class ProjectRepository : BaseRepository<ProjectModel>, IProjectRepositor
 
     }
 
+    public async Task<ICollection<ProjectModel>> GetByUserAsync(Guid userId)
+    {
+        var query = from project in Context.Projects
+                    where project.OwnerId == userId
+                    orderby project.Name
+                    select new ProjectModel(project.Id, project.Name, project.Status);
+
+        return await query.ToListAsync();
+    }
+
     public async Task<ICollection<ProjectModel>> GetProjectsByCompanyAsync(Guid companyId)
     {
         var query = from project in Context.Projects

@@ -4,5 +4,5 @@ namespace TarefaNinja.Domain;
 
 public interface ICompanyDomain
 {
-    Task<ICollection<CompanyUserResponse>> GetCompaniesAsync(Guid userId);
+    Task<ICollection<CompanyUserResponse>> GetByUserAsync(Guid userId);
 }

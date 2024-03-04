@@ -5,5 +5,6 @@ namespace TarefaNinja.Domain;
 
 public interface ITaskDomain
 {
-    Task<ICollection<TaskResponse>> GetTasksAsync(Guid projectId);
+    Task<ICollection<TaskResponse>> GetByProjectAsync(Guid projectId);
+    Task<ICollection<TaskResponse>> GetByUserAsync(Guid userId);
 }

@@ -12,7 +12,7 @@ public class CompanyDomain : ICompanyDomain
         CompanyRepository = companyRepository;
     }
 
-    public async Task<ICollection<CompanyUserResponse>> GetCompaniesAsync(Guid userId)
+    public async Task<ICollection<CompanyUserResponse>> GetByUserAsync(Guid userId)
     {
         var companies = await CompanyRepository.GetByUserAsync(userId);
 

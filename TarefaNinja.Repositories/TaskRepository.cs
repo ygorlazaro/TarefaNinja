@@ -1,3 +1,4 @@
+using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 
 using TarefaNinja.DAL;
@@ -18,6 +19,16 @@ public class TaskRepository : BaseRepository<TaskModel>, ITaskRepository
         var query = from task in Context.Tasks
                     join user in Context.Users on task.AssigneeId equals user.Id
                     where task.ProjectId == projectId
+                    select new TaskModel(task.Id, task.Name, task.Status, new UserModel(user.Id, user.Name, user.Email));
+
+        return await query.ToListAsync();
+    }
+
+    public async Task<ICollection<TaskModel>> GetByUserAsync(Guid userId)
+    {
+        var query = from task in Context.Tasks
+                    join user in Context.Users on task.AssigneeId equals user.Id
+                    where task.AssigneeId == userId
                     select new TaskModel(task.Id, task.Name, task.Status, new UserModel(user.Id, user.Name, user.Email));
 
         return await query.ToListAsync();
