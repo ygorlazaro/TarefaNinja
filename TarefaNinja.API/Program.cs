@@ -8,6 +8,7 @@ using Microsoft.OpenApi.Models;
 
 using System.Text;
 using System.Threading.RateLimiting;
+using TarefaNinja.API.Middlewares;
 using TarefaNinja.DAL;
 using TarefaNinja.Domain;
 using TarefaNinja.Repositories;
@@ -136,6 +137,8 @@ services.AddRateLimiter(options =>
         });
 
 var app = builder.Build();
+
+app.UseMiddleware<RequestLoggingMiddleware>();
 
 if (app.Environment.IsDevelopment())
 {
