@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity;
+
 using TarefaNinja.DAL.Models;
 using TarefaNinja.Domain.Requests;
 using TarefaNinja.Domain.Responses;
@@ -42,11 +43,13 @@ public class UserDomain : IUserDomain
 
         var user = new UserModel(userRequest.Name, userRequest.Username, userRequest.Email, hashedPassword);
 
-        var insertedUser = await UserRepository.InsertAsync(user);
+        UserRepository.Insert(user);
 
-        await UserCompanyRepository.AddUserToCompanyAsync(insertedUser.Id, company.Id, role);
+        await UserCompanyRepository.AddUserToCompanyAsync(user.Id, company.Id, role);
 
-        return new NewUserResponse(insertedUser.Id, insertedUser.Name, insertedUser.Username, insertedUser.Email, company.Id, company.Name, role);
+        await UserRepository.SaveChangesAsync();
+
+        return new NewUserResponse(user.Id, user.Name, user.Username, user.Email, company.Id, company.Name, role);
     }
 
 
@@ -95,7 +98,11 @@ public class UserDomain : IUserDomain
 
         var newCompany = new CompanyModel(companyName);
 
-        return (await CompanyRepository.InsertAsync(newCompany), true);
+        CompanyRepository.Insert(newCompany);
+
+        await CompanyRepository.SaveChangesAsync();
+
+        return (newCompany, true);
     }
 
 }

@@ -43,48 +43,35 @@ public abstract class BaseRepository<T> : IBaseRepository<T> where T : BaseModel
         return await query.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
     }
 
-    public async Task<bool> DeleteAsync(Guid id)
+    public async Task DeleteAsync(Guid id)
     {
         var entity = await Context.Set<T>().FirstOrDefaultAsync(x => x.Id == id);
 
         if (entity == null)
         {
-            return true;
+            return;
         }
 
         Context.Set<T>().Remove(entity);
-        await Context.SaveChangesAsync();
-
-        return false;
     }
 
-    public async Task<T> InsertAsync(T model)
+    public void Insert(T model)
     {
         Context.Set<T>().Add(model);
-        await Context.SaveChangesAsync();
-
-        return model;
     }
 
-    public async Task<bool> UpdateAsync(T model)
+    public void Update(T model)
     {
-        try
-        {
-            Context.Set<T>().Update(model);
-
-            await Context.SaveChangesAsync();
-
-            return true;
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex.Message);
-            return false;
-        }
+        Context.Set<T>().Update(model);
     }
 
     public async Task<bool> ExistsAsync(Guid id)
     {
         return await Context.Set<T>().AnyAsync(m => m.Id == id);
+    }
+
+    public async Task<int> SaveChangesAsync()
+    {
+        return await Context.SaveChangesAsync();
     }
 }
