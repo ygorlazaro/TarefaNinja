@@ -72,6 +72,8 @@ services.AddAuthentication(option =>
 });
 services.AddControllers();
 
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
 services.AddDbContext<DefaultContext>(options =>
 {
     options.EnableSensitiveDataLogging();
@@ -79,11 +81,12 @@ services.AddDbContext<DefaultContext>(options =>
 
     options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 
-    var connectionString = "Data Source=C:\\TarefaNinja\\TarefaNinja.db";
-    options.UseSqlite(connectionString, o =>
+    var connectionString = "Server=localhost;Port=5432;Database=tarefaninja;UID=postgres;PWD=postgres";
+
+    options.UseNpgsql(connectionString, o =>
     {
         o.MigrationsAssembly("TarefaNinja.API");
-    });
+    }).UseSnakeCaseNamingConvention();
 });
 
 services.AddTransient<IUserDomain, UserDomain>();
@@ -103,8 +106,6 @@ else
 {
     app.UseHttpsRedirection();
 }
-
-// app.UseStrictTransportSecurity(new HstsOptions(TimeSpan.FromDays(30), includeSubDomains: false, preload: false));
 
 app.UseHpkp(hpkp =>
 {
