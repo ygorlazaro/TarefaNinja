@@ -9,14 +9,16 @@ namespace TarefaNinja.API.Controllers;
 
 public class ProjectController : BaseController
 {
-    public ProjectController(ITaskDomain taskDomain, IProjectDomain projectDomain)
+    public ProjectController(ITaskDomain taskDomain, IProjectDomain projectDomain, ILabelDomain labelDomain)
     {
         TaskDomain = taskDomain;
         ProjectDomain = projectDomain;
+        LabelDomain = labelDomain;
     }
 
     private ITaskDomain TaskDomain { get; }
     private IProjectDomain ProjectDomain { get; }
+    private ILabelDomain LabelDomain { get; }
 
     [HttpGet("{projectId}/task")]
     public async Task<ActionResult<ICollection<TaskResponse>>> GetTasksAsync([FromRoute] Guid projectId)
@@ -24,6 +26,14 @@ public class ProjectController : BaseController
         var tasks = await TaskDomain.GetByProjectAsync(projectId);
 
         return Ok(tasks);
+    }
+
+    [HttpGet("{projectId}/label")]
+    public async Task<ActionResult<ICollection<LabelResponse>>> GetLabelsAsync([FromRoute] Guid projectId)
+    {
+        var labels = await LabelDomain.GetByProjectAsync(projectId);
+
+        return Ok(labels);
     }
 
     [HttpGet]

@@ -3,6 +3,7 @@ using TarefaNinja.Repositories.Abstracts;
 
 namespace TarefaNinja.Repositories;
 
-public interface ILabelRepository: IBaseRepository<LabelModel>
+public interface ILabelRepository : IBaseRepository<LabelModel>
 {
+    Task<ICollection<LabelModel>> GetByProjectAsync(Guid projectId);
 }
