@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 
 using TarefaNinja.API.Abstracts;
 using TarefaNinja.Domain;
-using TarefaNinja.Domain.Responses;
+using TarefaNinja.Utils.Responses;
 
 namespace TarefaNinja.API.Controllers;
 

@@ -1,4 +1,4 @@
-using TarefaNinja.Domain.Responses;
+using TarefaNinja.Utils.Responses;
 
 namespace TarefaNinja.Domain;
 

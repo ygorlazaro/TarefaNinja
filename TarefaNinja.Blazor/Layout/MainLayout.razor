@@ -1,0 +1,47 @@
+﻿@inject HttpClient Http
+@inherits LayoutComponentBase
+<div class="page">
+    <div class="sidebar">
+        <NavMenu />
+
+        @serverDateTime
+    </div>
+
+    <main>
+        <div class="top-row px-4">
+            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
+        </div>
+
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>
+
+@code {
+    private DateTime serverDateTime;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var client = new HttpClient();
+            var response = await client.GetAsync("http://localhost:5218/util/teste");
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                // Handle the content as needed
+
+                Console.WriteLine(content);
+            }
+            else
+            {
+                // Handle the unsuccessful response
+            }
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+}

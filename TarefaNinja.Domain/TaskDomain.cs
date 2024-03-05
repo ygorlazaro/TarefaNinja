@@ -1,6 +1,6 @@
 ﻿using TarefaNinja.DAL.Models;
-using TarefaNinja.Domain.Responses;
 using TarefaNinja.Repositories;
+using TarefaNinja.Utils.Responses;
 
 namespace TarefaNinja.Domain;
 
