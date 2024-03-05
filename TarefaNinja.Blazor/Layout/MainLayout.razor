@@ -1,7 +1,10 @@
-﻿@inherits LayoutComponentBase
+﻿@inject HttpClient Http
+@inherits LayoutComponentBase
 <div class="page">
     <div class="sidebar">
         <NavMenu />
+
+        @serverDateTime
     </div>
 
     <main>
@@ -14,3 +17,31 @@
         </article>
     </main>
 </div>
+
+@code {
+    private DateTime serverDateTime;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var client = new HttpClient();
+            var response = await client.GetAsync("http://localhost:5218/util/teste");
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                // Handle the content as needed
+
+                Console.WriteLine(content);
+            }
+            else
+            {
+                // Handle the unsuccessful response
+            }
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+}

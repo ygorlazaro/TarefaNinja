@@ -13,4 +13,13 @@ public class UtilController : BaseController
     {
         return Ok(DateTimeOffset.Now.ToUnixTimeSeconds());
     }
+
+    [HttpGet("teste")]
+    [AllowAnonymous]
+    public IActionResult GetTest()
+    {
+        return Ok(new Teste("Valor"));
+    }
 }
+
+public record Teste(string Chave);

@@ -1,3 +1,3 @@
-namespace TarefaNinja.Domain.Responses;
+namespace TarefaNinja.Utils.Responses;
 
 public record CompanyUserResponse(Guid Id, string Name);

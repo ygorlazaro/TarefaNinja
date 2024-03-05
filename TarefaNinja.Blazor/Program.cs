@@ -7,6 +7,18 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+var configuration = builder.Configuration;
+var baseUri = configuration["BaseUrl"];
+
+ArgumentNullException.ThrowIfNull(baseUri);
+
+var httpClient = new HttpClient
+{
+    BaseAddress = new Uri(baseUri),
+};
+
+httpClient.DefaultRequestHeaders.Add("X-Api-Version", "1");
+
+builder.Services.AddScoped(sp => httpClient);
 
 await builder.Build().RunAsync();

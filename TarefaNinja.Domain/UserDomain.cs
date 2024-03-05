@@ -1,10 +1,10 @@
 using TarefaNinja.DAL.Models;
-using TarefaNinja.Domain.Requests;
-using TarefaNinja.Domain.Responses;
 using TarefaNinja.Repositories;
 using TarefaNinja.Services;
 using TarefaNinja.Utils.Enums;
 using TarefaNinja.Utils.Exceptions;
+using TarefaNinja.Utils.Requests;
+using TarefaNinja.Utils.Responses;
 
 namespace TarefaNinja.Domain;
 public class UserDomain : IUserDomain

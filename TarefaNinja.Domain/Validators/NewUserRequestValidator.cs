@@ -1,6 +1,6 @@
 using FluentValidation;
 
-using TarefaNinja.Domain.Requests;
+using TarefaNinja.Utils.Requests;
 
 namespace TarefaNinja.Domain.Validators;
 
