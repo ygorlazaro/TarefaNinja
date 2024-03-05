@@ -9,29 +9,29 @@ namespace TarefaNinja.Repositories.Abstracts;
 
 public abstract class BaseRepository<T> : IBaseRepository<T> where T : BaseModel
 {
-    protected BaseRepository(DefaultContext context)
+    public BaseRepository(DefaultContext context)
     {
         Context = context;
     }
 
-    protected DefaultContext Context { get; }
+    public DefaultContext Context { get; }
 
-    protected async Task<int> CountAsync()
+    public virtual async Task<int> CountAsync()
     {
         return await Context.Set<T>().CountAsync();
     }
 
-    protected async Task<int> CountAsync(Expression<Func<T, bool>> predicate)
+    public virtual async Task<int> CountAsync(Expression<Func<T, bool>> predicate)
     {
         return await Context.Set<T>().CountAsync(predicate);
     }
 
-    public async Task<T?> GetByIdAsync(Guid id)
+    public virtual async Task<T?> GetByIdAsync(Guid id)
     {
         return await Context.Set<T>().FirstOrDefaultAsync(x => x.Id == id);
     }
 
-    public async Task<ICollection<T>> GetAllAsync(int page = 0, int pageSize = 0)
+    public virtual async Task<ICollection<T>> GetAllAsync(int page = 0, int pageSize = 0)
     {
         var query = Context.Set<T>().AsQueryable();
 
@@ -43,7 +43,7 @@ public abstract class BaseRepository<T> : IBaseRepository<T> where T : BaseModel
         return await query.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
     }
 
-    public async Task DeleteAsync(Guid id)
+    public virtual async Task DeleteAsync(Guid id)
     {
         var entity = await Context.Set<T>().FirstOrDefaultAsync(x => x.Id == id);
 
@@ -55,22 +55,30 @@ public abstract class BaseRepository<T> : IBaseRepository<T> where T : BaseModel
         Context.Set<T>().Remove(entity);
     }
 
-    public void Insert(T model)
+    public virtual async Task<T> InsertAsync(T model)
     {
         Context.Set<T>().Add(model);
+
+        await Context.SaveChangesAsync();
+
+        return model;
     }
 
-    public void Update(T model)
+    public virtual async Task<T> UpdateAsync(T model)
     {
         Context.Set<T>().Update(model);
+
+        await Context.SaveChangesAsync();
+
+        return model;
     }
 
-    public async Task<bool> ExistsAsync(Guid id)
+    public virtual async Task<bool> ExistsAsync(Guid id)
     {
         return await Context.Set<T>().AnyAsync(m => m.Id == id);
     }
 
-    public async Task<int> SaveChangesAsync()
+    public virtual async Task<int> SaveChangesAsync()
     {
         return await Context.SaveChangesAsync();
     }

@@ -2,6 +2,7 @@
 
 using TarefaNinja.API.Abstracts;
 using TarefaNinja.Domain;
+using TarefaNinja.Utils.Requests;
 using TarefaNinja.Utils.Responses;
 
 namespace TarefaNinja.API.Controllers;
@@ -21,5 +22,15 @@ public class TaskController : BaseController
         var tasks = await TaskDomain.GetByUserAsync(GetUserId());
 
         return Ok(tasks);
+    }
+
+    [HttpPost]
+    public async Task<ActionResult<TaskResponse>> PostAsync([FromBody] NewTaskRequest taskRequest)
+    {
+        var userId = GetUserId();
+
+        var task = await TaskDomain.CreateTaskAsync(taskRequest, userId);
+
+        return Ok(task);
     }
 }

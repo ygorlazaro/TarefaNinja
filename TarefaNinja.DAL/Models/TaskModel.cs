@@ -11,6 +11,11 @@ public record TaskModel(string Name, string Description, ProjectTaskStatus Statu
         Assignee = userModel;
     }
 
+    public TaskModel(string Name, string Description, ProjectTaskStatus Status, Guid userId) : this(Name, Description, Status)
+    {
+        AssigneeId = userId;
+    }
+
     public Guid? AssigneeId { get; set; }
 
     public virtual UserModel Assignee { get; set; } = default!;

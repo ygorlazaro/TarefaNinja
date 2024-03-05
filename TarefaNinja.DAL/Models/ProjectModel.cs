@@ -10,6 +10,12 @@ public record ProjectModel(string Name, ProjectStatus Status) : BaseModel
         Id = id;
     }
 
+    public ProjectModel(string name, Guid companyId, Guid userId) : this(name, ProjectStatus.Active)
+    {
+        CompanyId = companyId;
+        OwnerId = userId;
+    }
+
     public Guid OwnerId { get; set; }
 
     public virtual UserModel Owner { get; set; } = default!;

@@ -6,7 +6,7 @@ using TarefaNinja.Utils.Exceptions;
 
 namespace TarefaNinja.Repositories;
 
-public class UserCompanyRepository: BaseRepository<UserCompanyModel>, IUserCompanyRepository
+public class UserCompanyRepository : BaseRepository<UserCompanyModel>, IUserCompanyRepository
 {
     public IUserRepository UserRepository { get; }
     public ICompanyRepository CompanyRepository { get; }
@@ -14,7 +14,7 @@ public class UserCompanyRepository: BaseRepository<UserCompanyModel>, IUserCompa
     public UserCompanyRepository(DefaultContext context, IUserRepository userRepository, ICompanyRepository companyRepository) : base(context)
     {
         UserRepository = userRepository;
-        CompanyRepository  = companyRepository;
+        CompanyRepository = companyRepository;
     }
 
     public async Task<bool> AddUserToCompanyAsync(Guid userId, Guid companyId, UserCompanyRole role)
@@ -34,9 +34,7 @@ public class UserCompanyRepository: BaseRepository<UserCompanyModel>, IUserCompa
 
         var userCompany = new UserCompanyModel(userId, companyId, role);
 
-        Insert(userCompany);
-
-        await SaveChangesAsync();
+        await InsertAsync(userCompany);
 
         return true;
     }

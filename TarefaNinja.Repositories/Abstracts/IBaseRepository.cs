@@ -7,8 +7,6 @@ public interface IBaseRepository<T> where T : BaseModel
     Task DeleteAsync(Guid id);
     Task<ICollection<T>> GetAllAsync(int page = 0, int pageSize = 0);
     Task<T?> GetByIdAsync(Guid id);
-    void Insert(T model);
-    void Update(T model);
-
-    Task<int> SaveChangesAsync();
+    Task<T> InsertAsync(T model);
+    Task<T> UpdateAsync(T model);
 }

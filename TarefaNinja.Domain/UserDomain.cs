@@ -41,11 +41,9 @@ public class UserDomain : IUserDomain
 
         var user = new UserModel(userRequest.Name, userRequest.Login, userRequest.Email, hashedPassword);
 
-        UserRepository.Insert(user);
+        await UserRepository.InsertAsync(user);
 
         await UserCompanyRepository.AddUserToCompanyAsync(user.Id, company.Id, role);
-
-        await UserRepository.SaveChangesAsync();
 
         return new NewUserResponse(user.Id, user.Name, user.Login, user.Email, company.Id, company.Name, role);
     }
@@ -96,9 +94,7 @@ public class UserDomain : IUserDomain
 
         var newCompany = new CompanyModel(companyName);
 
-        CompanyRepository.Insert(newCompany);
-
-        await CompanyRepository.SaveChangesAsync();
+        await CompanyRepository.InsertAsync(newCompany);
 
         return (newCompany, true);
     }

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 
 using TarefaNinja.API.Abstracts;
 using TarefaNinja.Domain;
+using TarefaNinja.Utils.Requests;
 using TarefaNinja.Utils.Responses;
 
 namespace TarefaNinja.API.Controllers;
@@ -32,5 +33,20 @@ public class CompanyController : BaseController
         var projects = await ProjectDomain.GetProjectsAsync(companyId);
 
         return Ok(projects);
+    }
+
+    [HttpPost]
+    public async Task<ActionResult<CompanyUserResponse>> PostAsync([FromBody] NewCompanyRequest companyUserRequest)
+    {
+        var userId = GetUserId();
+
+        var company = await CompanyDomain.CreateCompanyAsync(companyUserRequest, userId);
+
+        if (company is null)
+        {
+            return BadRequest();
+        }
+
+        return Ok(company);
     }
 }

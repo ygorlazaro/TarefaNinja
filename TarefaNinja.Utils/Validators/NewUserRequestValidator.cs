@@ -2,7 +2,7 @@ using FluentValidation;
 
 using TarefaNinja.Utils.Requests;
 
-namespace TarefaNinja.Domain.Validators;
+namespace TarefaNinja.Utils.Validators;
 
 public class NewUserRequestValidator : AbstractValidator<NewUserRequest>
 {

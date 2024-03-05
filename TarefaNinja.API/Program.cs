@@ -23,7 +23,7 @@ var services = builder.Services;
 var configuration = builder.Configuration;
 
 services.AddLogging();
-services.AddCors();
+//services.AddCors();
 
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen(swagger =>
@@ -104,19 +104,18 @@ services.AddDbContext<DefaultContext>(options =>
     }).UseSnakeCaseNamingConvention();
 });
 
-//services.AddApiVersioning(options =>
-//{
-//    options.DefaultApiVersion = new ApiVersion(1);
-//    options.ReportApiVersions = true;
-//    options.UnsupportedApiVersionStatusCode = StatusCodes.Status505HttpVersionNotsupported;
-//    options.ApiVersionReader = ApiVersionReader.Combine(
-//        new HeaderApiVersionReader("X-Api-Version"));
-//}).AddApiExplorer(options =>
-//{
-//    options.GroupNameFormat = "'v'V";
-//    options.SubstituteApiVersionInUrl = true;
-//});
-
+services.AddApiVersioning(options =>
+{
+    options.DefaultApiVersion = new ApiVersion(1);
+    options.ReportApiVersions = true;
+    options.UnsupportedApiVersionStatusCode = StatusCodes.Status505HttpVersionNotsupported;
+    options.ApiVersionReader = ApiVersionReader.Combine(
+        new HeaderApiVersionReader("x-api-version"));
+}).AddApiExplorer(options =>
+{
+    options.GroupNameFormat = "'v'v";
+    options.SubstituteApiVersionInUrl = true;
+});
 
 services.AddTransient<IUserDomain, UserDomain>();
 services.AddTransient<ICompanyDomain, CompanyDomain>();
@@ -159,13 +158,13 @@ services.AddRateLimiter(options =>
 
 var app = builder.Build();
 
-app.UseCors(cors =>
-{
-    cors.AllowAnyOrigin()
-        .AllowAnyHeader()
-        .AllowAnyMethod()
-        .AllowCredentials();
-});
+//app.UseCors(cors =>
+//{
+//    cors.AllowAnyOrigin()
+//        .AllowAnyHeader()
+//        .AllowAnyMethod()
+//        .AllowCredentials();
+//});
 
 app.UseMiddleware<RequestLoggingMiddleware>();
 
@@ -179,42 +178,42 @@ else
     app.UseHttpsRedirection();
 }
 
-//app.UseHpkp(hpkp =>
-//{
-//    hpkp.UseMaxAgeSeconds(30 * 24 * 60 * 60)
-//        .AddSha256Pin("nrmpk4ZI3wbRBmUZIT5aKAgP0LlKHRgfA2Snjzeg9iY=")
-//        .SetReportOnly()
-//        .ReportViolationsTo("/hpkp-report");
-//});
+app.UseHpkp(hpkp =>
+{
+    hpkp.UseMaxAgeSeconds(30 * 24 * 60 * 60)
+        .AddSha256Pin("nrmpk4ZI3wbRBmUZIT5aKAgP0LlKHRgfA2Snjzeg9iY=")
+        .SetReportOnly()
+        .ReportViolationsTo("/hpkp-report");
+});
 
-//app.UseCsp(csp =>
-//{
-//    csp.ByDefaultAllow
-//        .FromSelf();
+app.UseCsp(csp =>
+{
+    csp.ByDefaultAllow
+        .FromSelf();
 
-//    csp.AllowScripts
-//        .FromSelf();
+    csp.AllowScripts
+        .FromSelf();
 
-//    csp.AllowStyles
-//        .FromSelf();
+    csp.AllowStyles
+        .FromSelf();
 
-//    csp.AllowImages
-//        .FromSelf();
+    csp.AllowImages
+        .FromSelf();
 
-//    csp.AllowAudioAndVideo
-//        .FromNowhere();
+    csp.AllowAudioAndVideo
+        .FromNowhere();
 
-//    csp.AllowFrames
-//        .FromNowhere();
+    csp.AllowFrames
+        .FromNowhere();
 
-//    csp.AllowPlugins
-//        .FromNowhere();
+    csp.AllowPlugins
+        .FromNowhere();
 
-//    csp.AllowFraming
-//        .FromNowhere();
+    csp.AllowFraming
+        .FromNowhere();
 
-//    csp.ReportViolationsTo("/csp-report");
-//});
+    csp.ReportViolationsTo("/csp-report");
+});
 
 app.MapControllers();
 

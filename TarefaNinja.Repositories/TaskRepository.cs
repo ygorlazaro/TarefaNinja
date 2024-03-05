@@ -33,4 +33,14 @@ public class TaskRepository : BaseRepository<TaskModel>, ITaskRepository
 
         return await query.ToListAsync();
     }
+
+    public override async Task<TaskModel?> GetByIdAsync(Guid taskId)
+    {
+        var query = from task in Context.Tasks
+                    join user in Context.Users on task.AssigneeId equals user.Id
+                    where task.Id == taskId
+                    select new TaskModel(task.Id, task.Name, task.Status, new UserModel(user.Id, user.Name, user.Email));
+
+        return await query.FirstOrDefaultAsync();
+    }
 }

@@ -2,6 +2,7 @@
 
 using TarefaNinja.API.Abstracts;
 using TarefaNinja.Domain;
+using TarefaNinja.Utils.Requests;
 using TarefaNinja.Utils.Responses;
 
 namespace TarefaNinja.API.Controllers;
@@ -31,5 +32,20 @@ public class ProjectController : BaseController
         var projects = await ProjectDomain.GetByUserAsync(GetUserId());
 
         return Ok(projects);
+    }
+
+    [HttpPost]
+    public async Task<ActionResult<ProjectResponse>> PostAsync([FromBody] NewProjectRequest projectRequest)
+    {
+        var userId = GetUserId();
+
+        var project = await ProjectDomain.CreateProject(projectRequest, userId);
+
+        if (project is null)
+        {
+            return BadRequest();
+        }
+
+        return Ok(project);
     }
 }
