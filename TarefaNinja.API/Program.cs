@@ -1,7 +1,5 @@
 using Asp.Versioning;
 
-using Joonasw.AspNetCore.SecurityHeaders;
-
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
@@ -177,43 +175,6 @@ else
 {
     app.UseHttpsRedirection();
 }
-
-app.UseHpkp(hpkp =>
-{
-    hpkp.UseMaxAgeSeconds(30 * 24 * 60 * 60)
-        .AddSha256Pin("nrmpk4ZI3wbRBmUZIT5aKAgP0LlKHRgfA2Snjzeg9iY=")
-        .SetReportOnly()
-        .ReportViolationsTo("/hpkp-report");
-});
-
-app.UseCsp(csp =>
-{
-    csp.ByDefaultAllow
-        .FromSelf();
-
-    csp.AllowScripts
-        .FromSelf();
-
-    csp.AllowStyles
-        .FromSelf();
-
-    csp.AllowImages
-        .FromSelf();
-
-    csp.AllowAudioAndVideo
-        .FromNowhere();
-
-    csp.AllowFrames
-        .FromNowhere();
-
-    csp.AllowPlugins
-        .FromNowhere();
-
-    csp.AllowFraming
-        .FromNowhere();
-
-    csp.ReportViolationsTo("/csp-report");
-});
 
 app.MapControllers();
 
